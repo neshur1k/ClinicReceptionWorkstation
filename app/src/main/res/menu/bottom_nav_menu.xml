@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/overview_nav"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="Обзор" />
+    <item
+        android:id="@+id/journal_nav"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Журнал" />
+    <item
+        android:id="@+id/schedule_nav"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="Записать" />
+    <item
+        android:id="@+id/guide_nav"
+        android:icon="@android:drawable/ic_input_get"
+        android:title="Справочник" />
+    <item
+        android:id="@+id/statistics_nav"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Статистика" />
+</menu>
