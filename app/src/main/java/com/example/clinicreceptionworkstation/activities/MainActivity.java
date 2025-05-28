@@ -1,8 +1,16 @@
-package com.example.clinicreceptionworkstation;
+package com.example.clinicreceptionworkstation.activities;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.example.clinicreceptionworkstation.fragments.GuideFragment;
+import com.example.clinicreceptionworkstation.fragments.JournalFragment;
+import com.example.clinicreceptionworkstation.fragments.OverviewFragment;
+import com.example.clinicreceptionworkstation.R;
+import com.example.clinicreceptionworkstation.fragments.ScheduleFragment;
+import com.example.clinicreceptionworkstation.fragments.StatisticsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
