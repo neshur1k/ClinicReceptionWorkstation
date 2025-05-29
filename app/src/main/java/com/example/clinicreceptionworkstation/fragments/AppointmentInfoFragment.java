@@ -2,31 +2,20 @@ package com.example.clinicreceptionworkstation.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.clinicreceptionworkstation.R;
-import com.example.clinicreceptionworkstation.adapters.DoctorAdapter;
-import com.example.clinicreceptionworkstation.adapters.PatientAdapter;
-import com.example.clinicreceptionworkstation.db.DatabaseHelper;
-import com.example.clinicreceptionworkstation.models.Doctor;
-import com.example.clinicreceptionworkstation.models.Patient;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DoctorsListFragment#newInstance} factory method to
+ * Use the {@link AppointmentInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DoctorsListFragment extends Fragment {
+public class AppointmentInfoFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,7 +26,7 @@ public class DoctorsListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public DoctorsListFragment() {
+    public AppointmentInfoFragment() {
         // Required empty public constructor
     }
 
@@ -47,11 +36,11 @@ public class DoctorsListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DoctorsListFragment.
+     * @return A new instance of fragment AppointmentInfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DoctorsListFragment newInstance(String param1, String param2) {
-        DoctorsListFragment fragment = new DoctorsListFragment();
+    public static AppointmentInfoFragment newInstance(String param1, String param2) {
+        AppointmentInfoFragment fragment = new AppointmentInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,18 +61,6 @@ public class DoctorsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_doctors_list, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        RecyclerView doctorsList = view.findViewById(R.id.doctors_list);
-        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
-        List<Doctor> doctors = dbHelper.getAllDoctors();
-        DoctorAdapter adapter = new DoctorAdapter(requireActivity(), doctors);
-        doctorsList.setLayoutManager(new LinearLayoutManager(requireContext()));
-        doctorsList.setAdapter(adapter);
+        return inflater.inflate(R.layout.fragment_appointment_info, container, false);
     }
 }

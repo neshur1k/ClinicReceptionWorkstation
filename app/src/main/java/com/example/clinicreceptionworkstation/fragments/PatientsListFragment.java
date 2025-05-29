@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.adapters.PatientAdapter;
@@ -77,11 +79,22 @@ public class PatientsListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ImageButton addPatientButton = view.findViewById(R.id.addPatientButton);
         RecyclerView patientsList = view.findViewById(R.id.patients_list);
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
         List<Patient> patients = dbHelper.getAllPatients();
-        PatientAdapter adapter = new PatientAdapter(patients);
+        PatientAdapter adapter = new PatientAdapter(requireActivity(), patients);
         patientsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         patientsList.setAdapter(adapter);
+
+        addPatientButton.setOnClickListener(v -> {
+            AddPatientFragment fragment = new AddPatientFragment();
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 }

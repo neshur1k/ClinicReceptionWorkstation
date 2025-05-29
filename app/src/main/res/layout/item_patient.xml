@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="6dp"
     android:orientation="vertical"
-    android:background="@drawable/item_border">
+    android:background="@drawable/item_background_selector">
 
     <TextView
         android:id="@+id/patient_fio"

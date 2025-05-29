@@ -97,7 +97,8 @@ public class AppointmentsListFragment extends Fragment {
 
         RecyclerView appointmentsList = view.findViewById(R.id.appointments_list);
         List<Appointment> appointments = dbHelper.getAllAppointments();
-        AppointmentAdapter adapter = new AppointmentAdapter(appointments, patientMap, doctorMap);
+        AppointmentAdapter adapter = new AppointmentAdapter(
+                requireActivity(), appointments, patientMap, doctorMap);
         appointmentsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         appointmentsList.setAdapter(adapter);
     }

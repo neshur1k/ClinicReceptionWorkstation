@@ -1,22 +1,28 @@
 package com.example.clinicreceptionworkstation.adapters;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
+import com.example.clinicreceptionworkstation.fragments.DoctorInfoFragment;
+import com.example.clinicreceptionworkstation.fragments.PatientInfoFragment;
 import com.example.clinicreceptionworkstation.models.Patient;
 
 import java.util.List;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> {
     private final List<Patient> patients;
+    private static FragmentActivity activity = null;
 
-    public PatientAdapter(List<Patient> patients) {
+    public PatientAdapter(FragmentActivity activity, List<Patient> patients) {
+        PatientAdapter.activity = activity;
         this.patients = patients;
     }
 
@@ -54,6 +60,19 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             phoneTextView.setText(patient.getPhone());
             registrationDateTimeTextView.setText(patient.getRegistrationDate() + " " + patient.getRegistrationTime());
              */
+            itemView.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt("patient_id", patient.getId());
+
+                PatientInfoFragment fragment = new PatientInfoFragment();
+                fragment.setArguments(bundle);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            });
         }
     }
 
