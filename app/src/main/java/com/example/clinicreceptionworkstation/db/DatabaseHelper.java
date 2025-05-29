@@ -28,11 +28,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DoctorTable.createTable);
         db.execSQL(AppointmentTable.createTable);
 
-        addDoctor("Григорий", "Озеров", "Алексеевич", "Офтальмолог", "121", "+79001234567", "Понедельник-среда 10:00-16:00");
-        addDoctor("Максим", "Русаков", "Юрьевич", "Уролог", "205", "+79017654321", "Пятница-суббота 14:00-18:00");
-        addDoctor("Василий", "Иванов", "Вячеславович", "Гинеколог", "109", "+79022345678", "Вторник-четверг 11:00-17:00");
-        addDoctor("Анна", "Гурьянова", "Сергеевна", "Анестезиолог", "111", "+79038765432", "Воскресенье-вторник 16:00-20:00");
-        addDoctor("Илья", "Пахомов", "Андреевич", "Стоматолог", "221", "+79043456789", "Понедельник-пятница 09:00-15:00");
+        addDoctor(db, "Григорий", "Озеров", "Алексеевич", "Офтальмолог", "121", "+79001234567", "Понедельник-среда 10:00-16:00");
+        addDoctor(db, "Максим", "Русаков", "Юрьевич", "Уролог", "205", "+79017654321", "Пятница-суббота 14:00-18:00");
+        addDoctor(db, "Василий", "Иванов", "Вячеславович", "Гинеколог", "109", "+79022345678", "Вторник-четверг 11:00-17:00");
+        addDoctor(db, "Анна", "Гурьянова", "Сергеевна", "Анестезиолог", "111", "+79038765432", "Воскресенье-вторник 16:00-20:00");
+        addDoctor(db, "Илья", "Пахомов", "Андреевич", "Стоматолог", "221", "+79043456789", "Понедельник-пятница 09:00-15:00");
     }
 
     @Override
@@ -61,9 +61,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean addDoctor(String name, String surname, String patronymic, String specialization,
-                             String office, String phone, String notes) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    private void addDoctor(SQLiteDatabase db, String name, String surname, String patronymic,
+                             String specialization, String office, String phone, String notes) {
         ContentValues cv = new ContentValues();
         cv.put(DoctorTable.COLUMN_NAME, name);
         cv.put(DoctorTable.COLUMN_SURNAME, surname);
@@ -72,9 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(DoctorTable.COLUMN_OFFICE, office);
         cv.put(DoctorTable.COLUMN_PHONE, phone);
         cv.put(DoctorTable.COLUMN_NOTES, notes);
-        long result = db.insert(DoctorTable.TABLE_NAME, null, cv);
-        db.close();
-        return result != -1;
+        db.insert(DoctorTable.TABLE_NAME, null, cv);
     }
 
     public boolean addAppointment(Appointment appointment) {
