@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
-        super(context, "clinic.db", null, 1);
+        super(context, "clinic.db", null, 2);
     }
 
     @Override
@@ -33,6 +33,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         addDoctor(db, "Василий", "Иванов", "Вячеславович", "Гинеколог", "109", "+79022345678", "Вторник-четверг 11:00-17:00");
         addDoctor(db, "Анна", "Гурьянова", "Сергеевна", "Анестезиолог", "111", "+79038765432", "Воскресенье-вторник 16:00-20:00");
         addDoctor(db, "Илья", "Пахомов", "Андреевич", "Стоматолог", "221", "+79043456789", "Понедельник-пятница 09:00-15:00");
+        addDoctor(db, "Ксения", "Липасова", "Александровна", "Педиатр", "302", "+79059876543", "Понедельник-среда 10:00-16:00");
+        addDoctor(db, "Мария", "Ямпольская", "Георгиевна", "Терапевт", "101", "+79064567890", "Пятница-суббота 14:00-18:00");
+        addDoctor(db, "Екатерина", "Ермакова", "Максимовна", "Отоларинголог", "102", "+79076543210", "Вторник-четверг 11:00-17:00");
+        addDoctor(db, "Прокофьев", "Михаил", "Олегович", "Психиатр", "207", "+79085678901", "Воскресенье-вторник 16:00-20:00");
+        addDoctor(db, "Илья", "Вакшин", "Игоревич", "Химиотерапевт", "209", "+79093210987", "Понедельник-пятница 09:00-15:00");
     }
 
     @Override
@@ -84,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(AppointmentTable.COLUMN_NOTES, appointment.getNotes());
         cv.put(AppointmentTable.COLUMN_SCHEDULING_DATE, appointment.getSchedulingDate());
         cv.put(AppointmentTable.COLUMN_SCHEDULING_TIME, appointment.getSchedulingTime());
+        cv.put(AppointmentTable.COLUMN_STATUS, appointment.getStatus());
         long result = db.insert(AppointmentTable.TABLE_NAME, null, cv);
         db.close();
         return result != -1;
@@ -175,13 +181,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         AppointmentTable.COLUMN_TIME,
                         AppointmentTable.COLUMN_NOTES,
                         AppointmentTable.COLUMN_SCHEDULING_DATE,
-                        AppointmentTable.COLUMN_SCHEDULING_TIME},
+                        AppointmentTable.COLUMN_SCHEDULING_TIME,
+                        AppointmentTable.COLUMN_STATUS},
                 AppointmentTable.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(id)}, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             Appointment appointment = new Appointment(cursor.getInt(0), cursor.getInt(1),
                     cursor.getInt(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),
-                    cursor.getString(6), cursor.getString(7));
+                    cursor.getString(6), cursor.getString(7), cursor.getString(8));
             cursor.close();
             db.close();
             return appointment;
@@ -236,7 +243,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Appointment appointment = new Appointment(cursor.getInt(0), cursor.getInt(1),
                         cursor.getInt(2), cursor.getString(3), cursor.getString(4),
-                        cursor.getString(5), cursor.getString(6), cursor.getString(7));
+                        cursor.getString(5), cursor.getString(6), cursor.getString(7),
+                        cursor.getString(8));
                 appointmentList.add(appointment);
             } while (cursor.moveToNext());
         }
@@ -271,8 +279,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result > 0;
     }
 
-    public boolean updateAppointment(int id, int newPatientId, int newDoctorId,
-                                     String newDate, String newTime, String newNotes) {
+    public boolean updateAppointment(int id, int newPatientId, int newDoctorId, String newDate,
+                                     String newTime, String newNotes, String newStatus) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         Appointment appointment = findAppointment(id);
@@ -287,8 +295,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(AppointmentTable.COLUMN_NOTES, newNotes);
         cv.put(AppointmentTable.COLUMN_SCHEDULING_DATE, appointment.getSchedulingDate());
         cv.put(AppointmentTable.COLUMN_SCHEDULING_TIME, appointment.getSchedulingTime());
+        cv.put(AppointmentTable.COLUMN_STATUS, newStatus);
         int result = db.update(AppointmentTable.TABLE_NAME, cv,
-                PatientTable.COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+                AppointmentTable.COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
         return result > 0;
     }
