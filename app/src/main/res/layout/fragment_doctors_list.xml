@@ -4,30 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.PatientsListFragment">
+    tools:context=".fragments.DoctorsListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/patients_list"
+        android:id="@+id/doctors_list"
         android:layout_width="329dp"
         android:layout_height="183dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.839"
         android:background="@drawable/recycler_border" />
 
     <TextView
-        android:id="@+id/patientsTextView"
+        android:id="@+id/doctorsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Пациенты"
+        android:text="Врачи"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintVertical_bias="0.650" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

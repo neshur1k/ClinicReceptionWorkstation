@@ -1,5 +1,7 @@
 package com.example.clinicreceptionworkstation.models;
 
+import androidx.annotation.NonNull;
+
 public class Doctor {
     private int id;
     private String name;
@@ -84,5 +86,11 @@ public class Doctor {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return surname + " " + name + " (" + specialization + ")";
     }
 }

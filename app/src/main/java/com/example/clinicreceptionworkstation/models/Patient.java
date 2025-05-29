@@ -1,5 +1,7 @@
 package com.example.clinicreceptionworkstation.models;
 
+import androidx.annotation.NonNull;
+
 public class Patient {
     private int id;
     private String record;
@@ -115,5 +117,11 @@ public class Patient {
 
     public void setRegistrationTime(String registrationTime) {
         this.registrationTime = registrationTime;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return surname + " " + name + " " + patronymic;
     }
 }

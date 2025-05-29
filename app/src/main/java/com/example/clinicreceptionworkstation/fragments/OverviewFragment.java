@@ -71,10 +71,10 @@ public class OverviewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (savedInstanceState == null) {
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.patients_fragment_container, new PatientsListFragment())
-                    .commit();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.patients_fragment_container, new PatientsListFragment()).commit();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.doctors_fragment_container, new DoctorsListFragment()).commit();
         }
     }
 }

@@ -5,10 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +14,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.clinicreceptionworkstation.R;
-import com.example.clinicreceptionworkstation.activities.MainActivity;
-import com.example.clinicreceptionworkstation.adapters.PatientAdapter;
 import com.example.clinicreceptionworkstation.db.DatabaseHelper;
 import com.example.clinicreceptionworkstation.models.Patient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -91,7 +85,7 @@ public class AddPatientFragment extends Fragment {
         EditText recordEditText = view.findViewById(R.id.recordEditText);
         EditText genderEditText = view.findViewById(R.id.genderEditText);
         EditText birthDateEditText = view.findViewById(R.id.birthDateEditText);
-        EditText insuranceEditText = view.findViewById(R.id.insuranceEditText);
+        EditText insuranceEditText = view.findViewById(R.id.patientInsuranceEditText);
         EditText phoneEditText = view.findViewById(R.id.phoneEditText);
         Button saveButton = view.findViewById(R.id.saveButton);
 

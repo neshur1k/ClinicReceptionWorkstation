@@ -5,19 +5,28 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.clinicreceptionworkstation.R;
+import com.example.clinicreceptionworkstation.adapters.DoctorAdapter;
+import com.example.clinicreceptionworkstation.adapters.PatientAdapter;
+import com.example.clinicreceptionworkstation.db.DatabaseHelper;
+import com.example.clinicreceptionworkstation.models.Doctor;
+import com.example.clinicreceptionworkstation.models.Patient;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ScheduleFragment#newInstance} factory method to
+ * Use the {@link DoctorsListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScheduleFragment extends Fragment {
+public class DoctorsListFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +37,7 @@ public class ScheduleFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ScheduleFragment() {
+    public DoctorsListFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +47,11 @@ public class ScheduleFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ScheduleFragment.
+     * @return A new instance of fragment DoctorsListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ScheduleFragment newInstance(String param1, String param2) {
-        ScheduleFragment fragment = new ScheduleFragment();
+    public static DoctorsListFragment newInstance(String param1, String param2) {
+        DoctorsListFragment fragment = new DoctorsListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,18 +72,18 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_schedule, container, false);
+        return inflater.inflate(R.layout.fragment_doctors_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (savedInstanceState == null) {
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.schedule_fragment_container, new AddAppointmentFragment())
-                    .commit();
-        }
+        RecyclerView doctorsList = view.findViewById(R.id.doctors_list);
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        List<Doctor> doctors = dbHelper.getAllDoctors();
+        DoctorAdapter adapter = new DoctorAdapter(doctors);
+        doctorsList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        doctorsList.setAdapter(adapter);
     }
 }
