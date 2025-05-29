@@ -75,6 +75,8 @@ public class OverviewFragment extends Fragment {
                     .replace(R.id.patients_fragment_container, new PatientsListFragment()).commit();
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.doctors_fragment_container, new DoctorsListFragment()).commit();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.appointments_fragment_container, new AppointmentsListFragment()).commit();
         }
     }
 }
