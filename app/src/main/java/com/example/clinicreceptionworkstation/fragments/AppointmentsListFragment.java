@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.adapters.AppointmentAdapter;
-import com.example.clinicreceptionworkstation.adapters.DoctorAdapter;
 import com.example.clinicreceptionworkstation.db.DatabaseHelper;
 import com.example.clinicreceptionworkstation.models.Appointment;
 import com.example.clinicreceptionworkstation.models.Doctor;

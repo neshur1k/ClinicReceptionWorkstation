@@ -117,7 +117,7 @@ public class AddPatientFragment extends Fragment {
                     birthDate, insurance, phone, registrationDate, registrationTime)))
             {
                 dbHelper.addAction("Пациент зарегистрирован: " + surname + " " + name + " " +
-                        " " + patronymic + ", медкарта " + record + ", СНИЛС " + insurance,
+                        patronymic + ", медкарта " + record + ", СНИЛС " + insurance,
                         registrationDate, registrationTime);
                 surnameEditText.setText("");
                 nameEditText.setText("");

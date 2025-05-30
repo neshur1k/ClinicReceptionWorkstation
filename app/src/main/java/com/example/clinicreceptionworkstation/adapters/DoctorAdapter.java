@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
-import com.example.clinicreceptionworkstation.fragments.AppointmentInfoFragment;
 import com.example.clinicreceptionworkstation.fragments.DoctorInfoFragment;
 import com.example.clinicreceptionworkstation.models.Doctor;
 

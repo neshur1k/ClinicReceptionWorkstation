@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.db.DatabaseHelper;
 import com.example.clinicreceptionworkstation.models.Doctor;
-import com.example.clinicreceptionworkstation.models.Patient;
 
 /**
  * A simple {@link Fragment} subclass.

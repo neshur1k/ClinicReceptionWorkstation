@@ -280,54 +280,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return actionList;
     }
 
-    public boolean updatePatient(int id, String newRecord, String newName, String newSurname,
-                                 String newPatronymic, String newGender, String newBirthDate,
-                                 String newInsurance, String newPhone) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        Patient patient = findPatient(id);
-        if (patient == null) {
-            db.close();
-            return false;
-        }
-        cv.put(PatientTable.COLUMN_RECORD, newRecord);
-        cv.put(PatientTable.COLUMN_NAME, newName);
-        cv.put(PatientTable.COLUMN_SURNAME, newSurname);
-        cv.put(PatientTable.COLUMN_PATRONYMIC, newPatronymic);
-        cv.put(PatientTable.COLUMN_GENDER, newGender);
-        cv.put(PatientTable.COLUMN_BIRTH_DATE, newBirthDate);
-        cv.put(PatientTable.COLUMN_INSURANCE, newInsurance);
-        cv.put(PatientTable.COLUMN_PHONE, newPhone);
-        cv.put(PatientTable.COLUMN_REGISTRATION_DATE, patient.getRegistrationDate());
-        cv.put(PatientTable.COLUMN_REGISTRATION_TIME, patient.getRegistrationTime());
-        int result = db.update(PatientTable.TABLE_NAME, cv,
-                PatientTable.COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
-        db.close();
-        return result > 0;
-    }
-
-    public boolean updateAppointment(int id, int newPatientId, int newDoctorId, String newDate,
-                                     String newTime, String newNotes) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        Appointment appointment = findAppointment(id);
-        if (appointment == null) {
-            db.close();
-            return false;
-        }
-        cv.put(AppointmentTable.COLUMN_PATIENT_ID, newPatientId);
-        cv.put(AppointmentTable.COLUMN_DOCTOR_ID, newDoctorId);
-        cv.put(AppointmentTable.COLUMN_DATE, newDate);
-        cv.put(AppointmentTable.COLUMN_TIME, newTime);
-        cv.put(AppointmentTable.COLUMN_NOTES, newNotes);
-        cv.put(AppointmentTable.COLUMN_SCHEDULING_DATE, appointment.getSchedulingDate());
-        cv.put(AppointmentTable.COLUMN_SCHEDULING_TIME, appointment.getSchedulingTime());
-        int result = db.update(AppointmentTable.TABLE_NAME, cv,
-                AppointmentTable.COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
-        db.close();
-        return result > 0;
-    }
-
     public int getPatientCount() {
         return getTableRowCount(PatientTable.TABLE_NAME);
     }

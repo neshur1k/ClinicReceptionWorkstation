@@ -9,14 +9,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.db.DatabaseHelper;
-import com.example.clinicreceptionworkstation.models.Appointment;
-import com.example.clinicreceptionworkstation.models.Doctor;
 import com.example.clinicreceptionworkstation.models.Patient;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,6 +85,8 @@ public class PatientInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        List<Patient> patients = dbHelper.getAllPatients();
 
         TextView fioTextView = view.findViewById(R.id.fioTextView);
         TextView recordTextView = view.findViewById(R.id.recordTextView);
@@ -89,6 +96,7 @@ public class PatientInfoFragment extends Fragment {
         TextView birthDateTextView = view.findViewById(R.id.birthDateTextView);
         TextView registrationDateTimeTextView = view.findViewById(R.id.registrationDateTimeTextView);
         ImageButton backButton = view.findViewById(R.id.backButton);
+        Button deleteButton = view.findViewById(R.id.deletePatientButton);
         TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
         sectionTextView.setText("Пациент");
 
@@ -107,6 +115,46 @@ public class PatientInfoFragment extends Fragment {
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
                     .commit();
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            int id = patient.getId();
+
+            Date currentDate = new Date();
+            Locale russianLocale = new Locale("ru", "RU");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", russianLocale);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", russianLocale);
+            String deletingDate = dateFormat.format(currentDate);
+            String deletingTime = timeFormat.format(currentDate);
+
+            if (dbHelper.deletePatient(id)) {
+                int position = -1;
+                for (int i = 0; i < patients.size(); i++) {
+                    if (patients.get(i).getId() == id)
+                    {
+                        position = i;
+                        patients.remove(i);
+                        break;
+                    }
+                }
+                if (position != -1) {
+                    Toast.makeText(requireContext(), "Пациент удалён", Toast.LENGTH_SHORT).show();
+                    OverviewFragment fragment = new OverviewFragment();
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    dbHelper.addAction("Пациент удалён: " + patient.getSurname() + " " +
+                            patient.getName() + " " + patient.getPatronymic() + ", медкарта " +
+                            patient.getRecord() + ", СНИЛС " + patient.getInsurance(),
+                            deletingDate, deletingTime);
+                } else {
+                    Toast.makeText(requireContext(), "Ошибка при удалении пациента", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(requireContext(), "Ошибка при удалении пациента", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

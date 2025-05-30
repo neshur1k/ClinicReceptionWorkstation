@@ -15,13 +15,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
-import com.example.clinicreceptionworkstation.adapters.ActionAdapter;
 import com.example.clinicreceptionworkstation.adapters.ComplaintAdapter;
 import com.example.clinicreceptionworkstation.api.Complaint;
 import com.example.clinicreceptionworkstation.api.ComplaintApi;
 import com.example.clinicreceptionworkstation.api.RetrofitClient;
-import com.example.clinicreceptionworkstation.db.DatabaseHelper;
-import com.example.clinicreceptionworkstation.models.Action;
 
 import java.util.List;
 

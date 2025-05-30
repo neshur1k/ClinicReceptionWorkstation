@@ -15,10 +15,8 @@ import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.adapters.ActionAdapter;
-import com.example.clinicreceptionworkstation.adapters.DoctorAdapter;
 import com.example.clinicreceptionworkstation.db.DatabaseHelper;
 import com.example.clinicreceptionworkstation.models.Action;
-import com.example.clinicreceptionworkstation.models.Doctor;
 
 import java.util.List;
 

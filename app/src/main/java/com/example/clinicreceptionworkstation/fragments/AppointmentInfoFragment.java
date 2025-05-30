@@ -9,14 +9,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.db.DatabaseHelper;
 import com.example.clinicreceptionworkstation.models.Appointment;
 import com.example.clinicreceptionworkstation.models.Doctor;
 import com.example.clinicreceptionworkstation.models.Patient;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +88,7 @@ public class AppointmentInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        List<Appointment> appointments = dbHelper.getAllAppointments();
 
         TextView patientFioTextView = view.findViewById(R.id.patientFioTextView);
         TextView recordTextView = view.findViewById(R.id.recordTextView);
@@ -94,17 +102,18 @@ public class AppointmentInfoFragment extends Fragment {
         TextView schedulingDateTimeTextView = view.findViewById(R.id.schedulingDateTimeTextView);
         TextView notesTextView = view.findViewById(R.id.notesTextView);
         ImageButton backButton = view.findViewById(R.id.backButton);
+        Button deleteButton = view.findViewById(R.id.deleteAppointmentButton);
         TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
         sectionTextView.setText("Запись");
 
         Patient patient = dbHelper.findPatient(appointment.getPatientId());
         Doctor doctor = dbHelper.findDoctor(appointment.getDoctorId());
 
-        patientFioTextView.setText(patient.getSurname() + " " + patient.getName() + " " + patient.getPatronymic());
+        patientFioTextView.setText("Пациент: " + patient.getSurname() + " " + patient.getName() + " " + patient.getPatronymic());
         recordTextView.setText("Номер медкарты: " + patient.getRecord());
         insuranceTextView.setText("СНИЛС: " + patient.getInsurance());
         patientPhoneTextView.setText(patient.getPhone());
-        doctorFioTextView.setText(doctor.getSurname() + " " + doctor.getName() + " " + doctor.getPatronymic());
+        doctorFioTextView.setText("Врач: " + doctor.getSurname() + " " + doctor.getName() + " " + doctor.getPatronymic());
         specializationTextView.setText(doctor.getSpecialization());
         doctorPhoneTextView.setText(doctor.getPhone());
         dateTimeTextView.setText(appointment.getDate() + " " + appointment.getTime());
@@ -119,6 +128,48 @@ public class AppointmentInfoFragment extends Fragment {
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
                     .commit();
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            int id = appointment.getId();
+
+            Date currentDate = new Date();
+            Locale russianLocale = new Locale("ru", "RU");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", russianLocale);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", russianLocale);
+            String deletingDate = dateFormat.format(currentDate);
+            String deletingTime = timeFormat.format(currentDate);
+
+            if (dbHelper.deleteAppointment(id)) {
+                int position = -1;
+                for (int i = 0; i < appointments.size(); i++) {
+                    if (appointments.get(i).getId() == id)
+                    {
+                        position = i;
+                        appointments.remove(i);
+                        break;
+                    }
+                }
+                if (position != -1) {
+                    Toast.makeText(requireContext(), "Запись удалена", Toast.LENGTH_SHORT).show();
+                    OverviewFragment fragment = new OverviewFragment();
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    dbHelper.addAction("Запись удалена: пациент " + patient.getSurname() + " " +
+                            patient.getName() + " " + patient.getPatronymic() + " (медкарта " +
+                            patient.getRecord() + "), врач " + doctor.getSurname() + " " +
+                            doctor.getName() + " " + doctor.getPatronymic() + " (" +
+                            doctor.getSpecialization() + "), дата " + appointment.getDate() +
+                            ", время " + appointment.getTime(), deletingDate, deletingTime);
+                } else {
+                    Toast.makeText(requireContext(), "Ошибка при удалении записи", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(requireContext(), "Ошибка при удалении записи", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

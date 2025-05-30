@@ -8,9 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.api.Complaint;
-import com.example.clinicreceptionworkstation.models.Action;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
