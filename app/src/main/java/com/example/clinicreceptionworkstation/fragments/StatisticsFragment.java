@@ -84,6 +84,8 @@ public class StatisticsFragment extends Fragment {
         TextView doctorCountTextView = view.findViewById(R.id.doctorCountTextView);
         TextView appointmentCountTextView = view.findViewById(R.id.appointmentCountTextView);
         TextView actionCountTextView = view.findViewById(R.id.actionCountTextView);
+        TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
+        sectionTextView.setText("Статистика");
 
         patientCountTextView.setText("Всего пациентов: " + dbHelper.getPatientCount());
         doctorCountTextView.setText("Всего врачей: " + dbHelper.getDoctorCount());

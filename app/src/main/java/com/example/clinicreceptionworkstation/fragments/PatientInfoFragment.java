@@ -89,6 +89,8 @@ public class PatientInfoFragment extends Fragment {
         TextView birthDateTextView = view.findViewById(R.id.birthDateTextView);
         TextView registrationDateTimeTextView = view.findViewById(R.id.registrationDateTimeTextView);
         ImageButton backButton = view.findViewById(R.id.backButton);
+        TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
+        sectionTextView.setText("Пациент");
 
         fioTextView.setText(patient.getSurname() + " " + patient.getName() + " " + patient.getPatronymic());
         recordTextView.setText("Номер медкарты: " + patient.getRecord());

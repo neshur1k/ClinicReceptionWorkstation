@@ -86,6 +86,8 @@ public class DoctorInfoFragment extends Fragment {
         TextView officeTextView = view.findViewById(R.id.officeTextView);
         TextView notesTextView = view.findViewById(R.id.notesTextView);
         ImageButton backButton = view.findViewById(R.id.backButton);
+        TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
+        sectionTextView.setText("Врач");
 
         fioTextView.setText(doctor.getSurname() + " " + doctor.getName() + " " + doctor.getPatronymic());
         phoneTextView.setText(doctor.getPhone());

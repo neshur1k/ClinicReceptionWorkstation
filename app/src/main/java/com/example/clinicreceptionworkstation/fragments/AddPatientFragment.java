@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clinicreceptionworkstation.R;
@@ -90,6 +91,8 @@ public class AddPatientFragment extends Fragment {
         EditText phoneEditText = view.findViewById(R.id.phoneEditText);
         Button saveButton = view.findViewById(R.id.cancelButton);
         ImageButton backButton = view.findViewById(R.id.backButton);
+        TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
+        sectionTextView.setText("Зарегистрировать");
 
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
 

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.adapters.ActionAdapter;
@@ -85,6 +86,9 @@ public class GuideFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
+        sectionTextView.setText("Справочник");
 
         ComplaintApi api = RetrofitClient.getClient().create(ComplaintApi.class);
         Call<List<Complaint>> call = api.getComplaints();

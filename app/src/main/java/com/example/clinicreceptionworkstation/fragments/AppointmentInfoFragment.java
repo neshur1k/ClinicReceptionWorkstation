@@ -94,6 +94,8 @@ public class AppointmentInfoFragment extends Fragment {
         TextView schedulingDateTimeTextView = view.findViewById(R.id.schedulingDateTimeTextView);
         TextView notesTextView = view.findViewById(R.id.notesTextView);
         ImageButton backButton = view.findViewById(R.id.backButton);
+        TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
+        sectionTextView.setText("Запись");
 
         Patient patient = dbHelper.findPatient(appointment.getPatientId());
         Doctor doctor = dbHelper.findDoctor(appointment.getDoctorId());

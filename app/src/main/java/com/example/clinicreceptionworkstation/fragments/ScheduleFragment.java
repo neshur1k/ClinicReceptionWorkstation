@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
 
@@ -76,5 +77,8 @@ public class ScheduleFragment extends Fragment {
                     .replace(R.id.schedule_fragment_container, new AddAppointmentFragment())
                     .commit();
         }
+
+        TextView sectionTextView = requireActivity().findViewById(R.id.sectionTextView);
+        sectionTextView.setText("Записать");
     }
 }
