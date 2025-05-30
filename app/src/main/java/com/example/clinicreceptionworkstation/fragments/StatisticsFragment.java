@@ -1,5 +1,6 @@
 package com.example.clinicreceptionworkstation.fragments;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -88,5 +89,61 @@ public class StatisticsFragment extends Fragment {
         doctorCountTextView.setText("Всего врачей: " + dbHelper.getDoctorCount());
         appointmentCountTextView.setText("Всего записей: " + dbHelper.getAppointmentCount());
         actionCountTextView.setText("Всего действий: " + dbHelper.getActionCount());
+
+        patientCountTextView.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 ObjectAnimator scaleX =
+                         ObjectAnimator.ofFloat(patientCountTextView, "scaleX", 1f, 2f);
+                 ObjectAnimator scaleY =
+                         ObjectAnimator.ofFloat(patientCountTextView, "scaleY", 1f, 2f);
+                 scaleX.setDuration(1000);
+                 scaleY.setDuration(1000);
+                 scaleX.start();
+                 scaleY.start();
+             }
+        });
+
+        doctorCountTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimator scaleX =
+                        ObjectAnimator.ofFloat(doctorCountTextView, "scaleX", 1f, 2f);
+                ObjectAnimator scaleY =
+                        ObjectAnimator.ofFloat(doctorCountTextView, "scaleY", 1f, 2f);
+                scaleX.setDuration(1000);
+                scaleY.setDuration(1000);
+                scaleX.start();
+                scaleY.start();
+            }
+        });
+
+        appointmentCountTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimator scaleX =
+                        ObjectAnimator.ofFloat(appointmentCountTextView, "scaleX", 1f, 2f);
+                ObjectAnimator scaleY =
+                        ObjectAnimator.ofFloat(appointmentCountTextView, "scaleY", 1f, 2f);
+                scaleX.setDuration(1000);
+                scaleY.setDuration(1000);
+                scaleX.start();
+                scaleY.start();
+            }
+        });
+
+        actionCountTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimator scaleX =
+                        ObjectAnimator.ofFloat(actionCountTextView, "scaleX", 1f, 2f);
+                ObjectAnimator scaleY =
+                        ObjectAnimator.ofFloat(actionCountTextView, "scaleY", 1f, 2f);
+                scaleX.setDuration(1000);
+                scaleY.setDuration(1000);
+                scaleX.start();
+                scaleY.start();
+            }
+        });
     }
 }
