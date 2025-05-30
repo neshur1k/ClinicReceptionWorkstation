@@ -85,7 +85,10 @@ public class JournalFragment extends Fragment {
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
         List<Action> actions = dbHelper.getAllActions();
         ActionAdapter adapter = new ActionAdapter(actions);
-        actionsList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        actionsList.setLayoutManager(layoutManager);
         actionsList.setAdapter(adapter);
     }
 }
