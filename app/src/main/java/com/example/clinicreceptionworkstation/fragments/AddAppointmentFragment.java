@@ -160,6 +160,9 @@ public class AddAppointmentFragment extends Fragment {
                         doctor.getName() + " " + doctor.getPatronymic() + " (" +
                         doctor.getSpecialization() + "), дата " + date + ", время " + time,
                         schedulingDate, schedulingTime);
+                dateEditText.setText("");
+                timeEditText.setText("");
+                notesEditText.setText("");
                 Toast.makeText(requireContext(), "Запись создана", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(requireContext(), "Ошибка при создании записи", Toast.LENGTH_SHORT).show();

@@ -119,6 +119,14 @@ public class AddPatientFragment extends Fragment {
                 dbHelper.addAction("Пациент зарегистрирован: " + surname + " " + name + " " +
                         " " + patronymic + ", медкарта " + record + ", СНИЛС " + insurance,
                         registrationDate, registrationTime);
+                surnameEditText.setText("");
+                nameEditText.setText("");
+                patronymicEditText.setText("");
+                recordEditText.setText("");
+                genderEditText.setText("");
+                birthDateEditText.setText("");
+                insuranceEditText.setText("");
+                phoneEditText.setText("");
                 Toast.makeText(requireContext(), "Пациент зарегистирован", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(requireContext(), "Ошибка при регистрации пациента", Toast.LENGTH_SHORT).show();
