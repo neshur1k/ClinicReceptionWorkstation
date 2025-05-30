@@ -10,7 +10,6 @@ public class AppointmentTable {
     public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_SCHEDULING_DATE = "scheduling_date";
     public static final String COLUMN_SCHEDULING_TIME = "scheduling_time";
-    public static final String COLUMN_STATUS = "status";
 
     public static final String createTable = "CREATE TABLE " + TABLE_NAME + " ("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -20,7 +19,6 @@ public class AppointmentTable {
             + COLUMN_TIME + " TEXT, "
             + COLUMN_NOTES + " TEXT, "
             + COLUMN_SCHEDULING_DATE + " TEXT, "
-            + COLUMN_SCHEDULING_TIME + " TEXT, "
-            + COLUMN_STATUS + " TEXT)";
+            + COLUMN_SCHEDULING_TIME + " TEXT)";
     public static final String dropTable = "DROP TABLE IF EXISTS " + TABLE_NAME;
 }

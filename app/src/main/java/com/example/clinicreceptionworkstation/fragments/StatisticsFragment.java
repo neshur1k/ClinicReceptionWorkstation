@@ -2,13 +2,23 @@ package com.example.clinicreceptionworkstation.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
+import com.example.clinicreceptionworkstation.adapters.ActionAdapter;
+import com.example.clinicreceptionworkstation.db.DatabaseHelper;
+import com.example.clinicreceptionworkstation.models.Action;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,5 +72,21 @@ public class StatisticsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_statistics, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+
+        TextView patientCountTextView = view.findViewById(R.id.patientCountTextView);
+        TextView doctorCountTextView = view.findViewById(R.id.doctorCountTextView);
+        TextView appointmentCountTextView = view.findViewById(R.id.appointmentCountTextView);
+        TextView actionCountTextView = view.findViewById(R.id.actionCountTextView);
+
+        patientCountTextView.setText("Всего пациентов: " + dbHelper.getPatientCount());
+        doctorCountTextView.setText("Всего врачей: " + dbHelper.getDoctorCount());
+        appointmentCountTextView.setText("Всего записей: " + dbHelper.getAppointmentCount());
+        actionCountTextView.setText("Всего действий: " + dbHelper.getActionCount());
     }
 }

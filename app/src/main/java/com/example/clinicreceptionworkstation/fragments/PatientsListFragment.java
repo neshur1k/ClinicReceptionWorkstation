@@ -89,7 +89,6 @@ public class PatientsListFragment extends Fragment {
 
         addPatientButton.setOnClickListener(v -> {
             AddPatientFragment fragment = new AddPatientFragment();
-
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)

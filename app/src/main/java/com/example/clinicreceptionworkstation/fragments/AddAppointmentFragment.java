@@ -23,7 +23,6 @@ import com.example.clinicreceptionworkstation.models.Doctor;
 import com.example.clinicreceptionworkstation.models.Patient;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -94,7 +93,7 @@ public class AddAppointmentFragment extends Fragment {
         EditText notesEditText = view.findViewById(R.id.notesEditText);
         Spinner patientSpinner = view.findViewById(R.id.patientSpinner);
         Spinner doctorSpinner = view.findViewById(R.id.doctorSpinner);
-        Button saveButton = view.findViewById(R.id.saveButton);
+        Button saveButton = view.findViewById(R.id.cancelButton);
 
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
 
@@ -142,7 +141,6 @@ public class AddAppointmentFragment extends Fragment {
             String date = dateEditText.getText().toString();
             String time = timeEditText.getText().toString();
             String notes = notesEditText.getText().toString();
-            String status = "Ожидается";
 
             Date currentDate = new Date();
             Locale russianLocale = new Locale("ru", "RU");
@@ -152,8 +150,16 @@ public class AddAppointmentFragment extends Fragment {
             String schedulingTime = timeFormat.format(currentDate);
 
             if (dbHelper.addAppointment(new Appointment(0, selectedPatientId, selectedDoctorId,
-                    date, time, notes, schedulingDate, schedulingTime, status)))
+                    date, time, notes, schedulingDate, schedulingTime)))
             {
+                Patient patient = dbHelper.findPatient(selectedPatientId);
+                Doctor doctor = dbHelper.findDoctor(selectedDoctorId);
+                dbHelper.addAction("Запись создана: пациент " + patient.getSurname() + " " +
+                        patient.getName() + " " + patient.getPatronymic() + " (медкарта " +
+                        patient.getRecord() + "), врач " + doctor.getSurname() + " " +
+                        doctor.getName() + " " + doctor.getPatronymic() + " (" +
+                        doctor.getSpecialization() + "), дата " + date + ", время " + time,
+                        schedulingDate, schedulingTime);
                 Toast.makeText(requireContext(), "Запись создана", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(requireContext(), "Ошибка при создании записи", Toast.LENGTH_SHORT).show();

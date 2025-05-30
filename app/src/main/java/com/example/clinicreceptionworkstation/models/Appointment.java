@@ -9,10 +9,9 @@ public class Appointment {
     private String notes;
     private String schedulingDate;
     private String schedulingTime;
-    private String status;
 
     public Appointment(int id, int patientId, int doctorId, String date, String time, String notes,
-                       String schedulingDate, String schedulingTime, String status) {
+                       String schedulingDate, String schedulingTime) {
         this.id = id;
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -21,7 +20,6 @@ public class Appointment {
         this.notes = notes;
         this.schedulingDate = schedulingDate;
         this.schedulingTime = schedulingTime;
-        this.status = status;
     }
 
     public int getId() {
@@ -86,13 +84,5 @@ public class Appointment {
 
     public void setSchedulingTime(String schedulingTime) {
         this.schedulingTime = schedulingTime;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

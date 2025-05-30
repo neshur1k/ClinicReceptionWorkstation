@@ -2,13 +2,21 @@ package com.example.clinicreceptionworkstation.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
+import com.example.clinicreceptionworkstation.db.DatabaseHelper;
+import com.example.clinicreceptionworkstation.models.Appointment;
+import com.example.clinicreceptionworkstation.models.Doctor;
+import com.example.clinicreceptionworkstation.models.Patient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,8 @@ public class PatientInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Patient patient;
 
     public PatientInfoFragment() {
         // Required empty public constructor
@@ -60,7 +70,41 @@ public class PatientInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        assert getArguments() != null;
+        int patientId = getArguments().getInt("patient_id", -1);
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        patient = dbHelper.findPatient(patientId);
         return inflater.inflate(R.layout.fragment_patient_info, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView fioTextView = view.findViewById(R.id.fioTextView);
+        TextView recordTextView = view.findViewById(R.id.recordTextView);
+        TextView insuranceTextView = view.findViewById(R.id.insuranceTextView);
+        TextView phoneTextView = view.findViewById(R.id.phoneTextView);
+        TextView genderTextView = view.findViewById(R.id.genderTextView);
+        TextView birthDateTextView = view.findViewById(R.id.birthDateTextView);
+        TextView registrationDateTimeTextView = view.findViewById(R.id.registrationDateTimeTextView);
+        ImageButton backButton = view.findViewById(R.id.backButton);
+
+        fioTextView.setText(patient.getSurname() + " " + patient.getName() + " " + patient.getPatronymic());
+        recordTextView.setText("Номер медкарты: " + patient.getRecord());
+        insuranceTextView.setText("СНИЛС: " + patient.getInsurance());
+        phoneTextView.setText(patient.getPhone());
+        genderTextView.setText("Пол: " + patient.getGender());
+        birthDateTextView.setText("Дата рождения: " + patient.getBirthDate());
+        registrationDateTimeTextView.setText("Зарегистрирован " + patient.getRegistrationDate() + " " + patient.getRegistrationTime());
+
+        backButton.setOnClickListener(v -> {
+            OverviewFragment fragment = new OverviewFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 }

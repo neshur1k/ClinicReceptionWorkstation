@@ -29,37 +29,16 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView fioTextView;
         private final TextView recordTextView;
-        /*
-        private final TextView birthDateTextView;
-        private final TextView genderTextView;
-        private final TextView insuranceTextView;
-        private final TextView phoneTextView;
-        private final TextView registrationDateTimeTextView;
-         */
 
         public ViewHolder(View view) {
             super(view);
             fioTextView = view.findViewById(R.id.patient_fio);
             recordTextView = view.findViewById(R.id.patient_record);
-            /*
-            birthDateTextView = view.findViewById(R.id.patient_birth_date);
-            genderTextView = view.findViewById(R.id.patient_gender);
-            insuranceTextView = view.findViewById(R.id.patient_insurance);
-            phoneTextView = view.findViewById(R.id.patient_phone);
-            registrationDateTimeTextView = view.findViewById(R.id.patient_registration_date_time);
-             */
         }
 
         public void bind(Patient patient) {
             fioTextView.setText(patient.getSurname() + " " + patient.getName() + " " + patient.getPatronymic());
             recordTextView.setText("Номер медкарты: " + patient.getRecord());
-            /*
-            birthDateTextView.setText(patient.getBirthDate());
-            genderTextView.setText(patient.getGender());
-            insuranceTextView.setText(patient.getInsurance());
-            phoneTextView.setText(patient.getPhone());
-            registrationDateTimeTextView.setText(patient.getRegistrationDate() + " " + patient.getRegistrationTime());
-             */
             itemView.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
                 bundle.putInt("patient_id", patient.getId());

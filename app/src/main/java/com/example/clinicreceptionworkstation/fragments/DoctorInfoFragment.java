@@ -2,13 +2,20 @@ package com.example.clinicreceptionworkstation.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
+import com.example.clinicreceptionworkstation.db.DatabaseHelper;
+import com.example.clinicreceptionworkstation.models.Doctor;
+import com.example.clinicreceptionworkstation.models.Patient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,8 @@ public class DoctorInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Doctor doctor;
 
     public DoctorInfoFragment() {
         // Required empty public constructor
@@ -60,7 +69,37 @@ public class DoctorInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        assert getArguments() != null;
+        int doctorId = getArguments().getInt("doctor_id", -1);
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        doctor = dbHelper.findDoctor(doctorId);
         return inflater.inflate(R.layout.fragment_doctor_info, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView fioTextView = view.findViewById(R.id.fioTextView);
+        TextView phoneTextView = view.findViewById(R.id.phoneTextView);
+        TextView specializationTextView = view.findViewById(R.id.specializationTextView);
+        TextView officeTextView = view.findViewById(R.id.officeTextView);
+        TextView notesTextView = view.findViewById(R.id.notesTextView);
+        ImageButton backButton = view.findViewById(R.id.backButton);
+
+        fioTextView.setText(doctor.getSurname() + " " + doctor.getName() + " " + doctor.getPatronymic());
+        phoneTextView.setText(doctor.getPhone());
+        specializationTextView.setText(doctor.getSpecialization());
+        officeTextView.setText("Кабинет: " + doctor.getOffice());
+        notesTextView.setText(doctor.getNotes());
+
+        backButton.setOnClickListener(v -> {
+            OverviewFragment fragment = new OverviewFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 }

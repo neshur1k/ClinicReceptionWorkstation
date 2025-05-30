@@ -2,13 +2,21 @@ package com.example.clinicreceptionworkstation.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.clinicreceptionworkstation.R;
+import com.example.clinicreceptionworkstation.db.DatabaseHelper;
+import com.example.clinicreceptionworkstation.models.Appointment;
+import com.example.clinicreceptionworkstation.models.Doctor;
+import com.example.clinicreceptionworkstation.models.Patient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,8 @@ public class AppointmentInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Appointment appointment;
 
     public AppointmentInfoFragment() {
         // Required empty public constructor
@@ -60,7 +70,53 @@ public class AppointmentInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        assert getArguments() != null;
+        int appointmentId = getArguments().getInt("appointment_id", -1);
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        appointment = dbHelper.findAppointment(appointmentId);
         return inflater.inflate(R.layout.fragment_appointment_info, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+
+        TextView patientFioTextView = view.findViewById(R.id.patientFioTextView);
+        TextView recordTextView = view.findViewById(R.id.recordTextView);
+        TextView insuranceTextView = view.findViewById(R.id.insuranceTextView);
+        TextView patientPhoneTextView = view.findViewById(R.id.patientPhoneTextView);
+        TextView doctorFioTextView = view.findViewById(R.id.doctorFioTextView);
+        TextView specializationTextView = view.findViewById(R.id.specializationTextView);
+        TextView doctorPhoneTextView = view.findViewById(R.id.doctorPhoneTextView);
+        TextView dateTimeTextView = view.findViewById(R.id.dateTimeTextView);
+        TextView officeTextView = view.findViewById(R.id.officeTextView);
+        TextView schedulingDateTimeTextView = view.findViewById(R.id.schedulingDateTimeTextView);
+        TextView notesTextView = view.findViewById(R.id.notesTextView);
+        ImageButton backButton = view.findViewById(R.id.backButton);
+
+        Patient patient = dbHelper.findPatient(appointment.getPatientId());
+        Doctor doctor = dbHelper.findDoctor(appointment.getDoctorId());
+
+        patientFioTextView.setText(patient.getSurname() + " " + patient.getName() + " " + patient.getPatronymic());
+        recordTextView.setText("Номер медкарты: " + patient.getRecord());
+        insuranceTextView.setText("СНИЛС: " + patient.getInsurance());
+        patientPhoneTextView.setText(patient.getPhone());
+        doctorFioTextView.setText(doctor.getSurname() + " " + doctor.getName() + " " + doctor.getPatronymic());
+        specializationTextView.setText(doctor.getSpecialization());
+        doctorPhoneTextView.setText(doctor.getPhone());
+        dateTimeTextView.setText(appointment.getDate() + " " + appointment.getTime());
+        officeTextView.setText("Кабинет: " + doctor.getOffice());
+        schedulingDateTimeTextView.setText("Запись создана " + appointment.getSchedulingDate() + " " + appointment.getSchedulingTime());
+        notesTextView.setText(appointment.getNotes());
+
+        backButton.setOnClickListener(v -> {
+            OverviewFragment fragment = new OverviewFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 }

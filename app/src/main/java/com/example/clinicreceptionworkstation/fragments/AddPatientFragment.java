@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.clinicreceptionworkstation.R;
@@ -87,7 +88,8 @@ public class AddPatientFragment extends Fragment {
         EditText birthDateEditText = view.findViewById(R.id.birthDateEditText);
         EditText insuranceEditText = view.findViewById(R.id.patientInsuranceEditText);
         EditText phoneEditText = view.findViewById(R.id.phoneEditText);
-        Button saveButton = view.findViewById(R.id.saveButton);
+        Button saveButton = view.findViewById(R.id.cancelButton);
+        ImageButton backButton = view.findViewById(R.id.backButton);
 
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
 
@@ -111,10 +113,22 @@ public class AddPatientFragment extends Fragment {
             if (dbHelper.addPatient(new Patient(0, record, name, surname, patronymic, gender,
                     birthDate, insurance, phone, registrationDate, registrationTime)))
             {
+                dbHelper.addAction("Пациент зарегистрирован: " + surname + " " + name + " " +
+                        " " + patronymic + ", медкарта " + record + ", СНИЛС " + insurance,
+                        registrationDate, registrationTime);
                 Toast.makeText(requireContext(), "Пациент зарегистирован", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(requireContext(), "Ошибка при регистрации пациента", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        backButton.setOnClickListener(v -> {
+            OverviewFragment fragment = new OverviewFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
         });
     }
 }
