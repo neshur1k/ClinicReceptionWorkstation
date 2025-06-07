@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
-        super(context, "clinic.db", null, 3);
+        super(context, "clinic.db", null, 6);
     }
 
     @Override
@@ -122,6 +122,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(id)});
         db.close();
         return result > 0;
+    }
+
+    public void deleteAppointmentsByPatientId(int patientId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(AppointmentTable.TABLE_NAME,
+                AppointmentTable.COLUMN_PATIENT_ID + " = ?",
+                new String[]{String.valueOf(patientId)}
+        );
+        db.close();
     }
 
     public Patient findPatient(int id) {

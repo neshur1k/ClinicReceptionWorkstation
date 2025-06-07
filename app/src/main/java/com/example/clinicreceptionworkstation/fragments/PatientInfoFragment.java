@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.clinicreceptionworkstation.R;
 import com.example.clinicreceptionworkstation.db.DatabaseHelper;
+import com.example.clinicreceptionworkstation.models.Appointment;
 import com.example.clinicreceptionworkstation.models.Patient;
 
 import java.text.SimpleDateFormat;
@@ -138,6 +139,7 @@ public class PatientInfoFragment extends Fragment {
                     }
                 }
                 if (position != -1) {
+                    dbHelper.deleteAppointmentsByPatientId(id);
                     Toast.makeText(requireContext(), "Пациент удалён", Toast.LENGTH_SHORT).show();
                     OverviewFragment fragment = new OverviewFragment();
                     requireActivity().getSupportFragmentManager()
